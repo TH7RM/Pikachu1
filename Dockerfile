@@ -1,7 +1,7 @@
 FROM sandy1709/catuserbot:latest
 
 #clonning repo 
-RUN git clone https://github.com/TH7RM/pika.git /root/userbot
+RUN git clone https://github.com/TH7RM/Pikachu.git /root/userbot
 #working directory 
 WORKDIR /root/userbot
 
