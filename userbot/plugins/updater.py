@@ -225,7 +225,7 @@ async def upstream(event):
 @bot.on(sudo_cmd(pattern="badcat$", allow_sudo=True))
 async def upstream(event):
     event = await edit_or_reply(event, "`Pulling the bad cat repo wait a sec ....`")
-    off_repo = "https://github.com/TH7RM/pika"
+    off_repo = "https://github.com/TH7RM/Pikachu"
     catcmd = f"rm -rf .git"
     try:
         await runcmd(catcmd)
