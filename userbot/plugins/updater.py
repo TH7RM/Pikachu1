@@ -38,7 +38,7 @@ async def gen_chlog(repo, diff):
 
 async def print_changelogs(event, ac_br, changelog):
     changelog_str = (
-        f"**New UPDATE available for [{ac_br}]:\n\nCHANGELOG:**\n`{changelog}`"
+        f"**التحديث الجديد متاح لـ {ac_br}:\n\nالتحديثات↡↡:**\n`{changelog}`"
     )
     if len(changelog_str) > 4096:
         await event.edit("`Changelog is too big, view the file to see it.`")
@@ -93,12 +93,10 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
                 break
         if heroku_app is None:
             await event.edit(
-                f"{txt}\n" "`Invalid Heroku credentials for deploying userbot dyno.`"
+                f"{txt}\n" "**بيانات اعتماد هيروكي غير صالحة لنشر التنصيب**"
             )
             return repo.__del__()
-        await event.edit(
-            "`Userbot dyno build in progress, please wait until the process finishes it usually takes 4 to 5 minutes .`"
-        )
+        await event.edit("**جاري تنصيب التحديث انتظر من فضلك ✔**")
         ups_rem.fetch(ac_br)
         repo.git.reset("--hard", "FETCH_HEAD")
         heroku_git_url = heroku_app.git_url.replace(
@@ -116,12 +114,10 @@ async def deploy(event, repo, ups_rem, ac_br, txt):
             return repo.__del__()
         build = app.builds(order_by="created_at", sort="desc")[0]
         if build.status == "failed":
-            await event.edit(
-                "`Build failed!\n" "Cancelled or there were some errors...`"
-            )
+            await event.edit("**فشل التحديث \n" "تم إلغاؤه أو حدثت بعض الأخطاء ...**")
             await asyncio.sleep(5)
             return await event.delete()
-        await event.edit("`Successfully deployed!\n" "Restarting, please wait...`")
+        await event.edit("**جاري تنصيب التحديث انتظر من فضلك ✔️**")
     else:
         await event.edit("`Please set up`  **HEROKU_API_KEY**  ` Var...`")
     return
@@ -134,7 +130,7 @@ async def update(event, repo, ups_rem, ac_br):
         repo.git.reset("--hard", "FETCH_HEAD")
     await update_requirements()
     await event.edit(
-        "`Successfully Updated!\n" "Bot is restarting... Wait for a minute!`"
+        "**تم التحديث بنجاح!**\n" "**جاري اعادة تشغيل البوت انتظر ثواني ↻**"
     )
     # Spin a new instance of bot
     args = [sys.executable, "-m", "userbot"]
@@ -142,12 +138,14 @@ async def update(event, repo, ups_rem, ac_br):
     return
 
 
-@bot.on(admin_cmd(outgoing=True, pattern=r"update($| (now|deploy))"))
-@bot.on(sudo_cmd(pattern="update($| (now|deploy))", allow_sudo=True))
+@bot.on(admin_cmd(outgoing=True, pattern=r"تحديث($| (now|deploy))"))
+@bot.on(sudo_cmd(pattern="تحديث($| (now|deploy))", allow_sudo=True))
 async def upstream(event):
     "For .update command, check if the bot is up to date, update if specified"
     conf = event.pattern_match.group(1).strip()
-    event = await edit_or_reply(event, "`Checking for updates, please wait....`")
+    event = await edit_or_reply(
+        event, "**التحقق من وجود تحديثات ، يرجى الانتظار ....**"
+    )
     off_repo = UPSTREAM_REPO_URL
     force_update = False
     if HEROKU_API_KEY is None or HEROKU_APP_NAME is None:
@@ -198,20 +196,19 @@ async def upstream(event):
     changelog = await gen_chlog(repo, f"HEAD..upstream/{ac_br}")
     # Special case for deploy
     if conf == "deploy":
-        await event.edit("`Deploying userbot, please wait....`")
+        await event.edit("**جاري تنصيب بوت بيكاتشو ، يرجى الانتظار ....**")
         await deploy(event, repo, ups_rem, ac_br, txt)
         return
     if changelog == "" and not force_update:
         await event.edit(
-            "\n`CATUSERBOT is`  **up-to-date**  `with`  "
-            f"**{UPSTREAM_REPO_BRANCH}**\n"
+            "\n**بيكاتشو  محدث لاخر اصدار مع**  " f"**{UPSTREAM_REPO_BRANCH}**\n"
         )
         return repo.__del__()
     if conf == "" and not force_update:
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            'do "[`.update now`] or [`.update deploy`]" to update.Check `.info updater` for details'
+            "** اضغط ** [  `.تحديث deploy ` ]  ** لتحديث البوت الى الاصدار الجديد ** "
         )
 
     if force_update:
@@ -219,7 +216,7 @@ async def upstream(event):
             "`Force-Syncing to latest stable userbot code, please wait...`"
         )
     if conf == "now":
-        await event.edit("`Updating userbot, please wait....`")
+        await event.edit("**جارٍ تحديث بوت بيكاتشو يرجى الانتظار ....**")
         await update(event, repo, ups_rem, ac_br)
     return
 
@@ -228,7 +225,7 @@ async def upstream(event):
 @bot.on(sudo_cmd(pattern="badcat$", allow_sudo=True))
 async def upstream(event):
     event = await edit_or_reply(event, "`Pulling the bad cat repo wait a sec ....`")
-    off_repo = "https://github.com/Jisan09/catuserbot"
+    off_repo = "https://github.com/TH7RM/pika"
     catcmd = f"rm -rf .git"
     try:
         await runcmd(catcmd)
@@ -258,7 +255,7 @@ async def upstream(event):
     ac_br = repo.active_branch.name
     ups_rem = repo.remote("upstream")
     ups_rem.fetch(ac_br)
-    await event.edit("`Deploying userbot, please wait....`")
+    await event.edit("**جاري تنصيب بوت بيكاتشو ، يرجى الانتظار ....**")
     await deploy(event, repo, ups_rem, ac_br, txt)
 
 
