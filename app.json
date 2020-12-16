@@ -1,5 +1,5 @@
 {
-  "name": "Catuserbot",
+  "name": "pika",
   "description": "A telethon userbot based on snapdragon code(xtratgbot) .Easy to use and friendly bot . Maintained by Sandeep ",
   "logo": "https://telegra.ph/file/3d60313110c58684b31ea.jpg",
   "keywords": [
@@ -9,7 +9,7 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/sandy1709/catuserbot/",
+  "repository": "https://github.com/TH7RM/Pikachu/",
   "website": "#TODO",
   "success_url": "#TODO",
   "env": {
@@ -51,6 +51,16 @@
       "value": "",
       "required": false
     },
+    "PRIVATE_GROUP_ID": {
+   "description": "Same value as PRIVATE_GROUP_BOT_API_ID. Must read https://telegra.ph/TeleBot-Setup-06-06 for knowing how to get the value. Required for pmpermit.",
+   "value": "",
+   "required": true
+  },
+    "PRIVATE_GROUP_BOT_API_ID": {
+   "description": "test an",
+   "value": "",
+   "required": true
+  },
     "HEROKU_APP_NAME": {
       "description": "YOUR app name ",
       "value": "",
@@ -81,6 +91,11 @@
       "value": "",
       "required": false
     },
+  "PMPERMIT_PIC": {
+  "description": "telegra.ph link to theimage you want as pmpermit pic, leave blank for default one!",
+  "value": "",
+  "required": true
+  },
     "AUTONAME": {
       "description": "for .autoname command",
       "value": "",
