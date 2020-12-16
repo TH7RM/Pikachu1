@@ -12,8 +12,8 @@ from ..helpers.google_image_download import googleimagesdownload
 from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 
 
-@bot.on(admin_cmd(pattern=r"img(?: |$)(\d*)? ?(.*)"))
-@bot.on(sudo_cmd(pattern=r"img(?: |$)(\d*)? ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"صوره(?: |$)(\d*)? ?(.*)"))
+@bot.on(sudo_cmd(pattern=r"صوره(?: |$)(\d*)? ?(.*)", allow_sudo=True))
 async def img_sampler(event):
     reply_to_id = event.message.id
     if event.reply_to_msg_id:
@@ -25,9 +25,9 @@ async def img_sampler(event):
         query = str(event.pattern_match.group(2))
     if not query:
         return await edit_or_reply(
-            event, "Reply to a message or pass a query to search!"
+            event, "الرد على رسالة أو تمرير استعلام للبحث!"
         )
-    cat = await edit_or_reply(event, "`Processing...`")
+    cat = await edit_or_reply(event, "**معالجة...**")
     if event.pattern_match.group(1) != "":
         lim = int(event.pattern_match.group(1))
         if lim > 10:
@@ -48,7 +48,7 @@ async def img_sampler(event):
     try:
         paths = response.download(arguments)
     except Exception as e:
-        return await cat.edit(f"Error: \n`{e}`")
+        return await cat.edit(f"خطأ: \n`{e}`")
     lst = paths[0][query]
     await bot.send_file(
         await bot.get_input_entity(event.chat_id), lst, reply_to=reply_to_id
