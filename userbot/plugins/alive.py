@@ -8,12 +8,12 @@ from . import ALIVE_NAME, CMD_HELP, StartTime, catdef, catversion, mention, repl
 
 DEFAULTUSER = ALIVE_NAME or "cat"
 CAT_IMG = Config.ALIVE_PIC
-CUSTOM_ALIVE_TEXT = Config.CUSTOM_ALIVE_TEXT or "⋘ بوت الخاص بي يعمل بنجاح ⋙"
-EMOJI = Config.CUSTOM_ALIVE_EMOJI or "  ⫝ "
+CUSTOM_ALIVE_TEXT = Config.CUSTOM_ALIVE_TEXT or "✮ MY BOT IS RUNNING SUCCESFULLY ✮"
+EMOJI = Config.CUSTOM_ALIVE_EMOJI or "  ✥ "
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="ايدي$"))
-@bot.on(sudo_cmd(pattern="ايدي$", allow_sudo=True))
+@bot.on(admin_cmd(outgoing=True, pattern="alive$"))
+@bot.on(sudo_cmd(pattern="alive$", allow_sudo=True))
 async def amireallyalive(alive):
     if alive.fwd_from:
         return
@@ -22,13 +22,12 @@ async def amireallyalive(alive):
     _, check_sgnirts = check_data_base_heal_th()
     if CAT_IMG:
         cat_caption = f"**{CUSTOM_ALIVE_TEXT}**\n\n"
-        cat_caption += f"**{EMOJI} قاعدة البيانات :** `{check_sgnirts}`\n"
-        cat_caption += f"**{EMOJI} اصدار التليثون :** `{version.__version__}\n`"
-        cat_caption += f"**{EMOJI} اصدار بيكاتشو :** `{catversion}`\n"
-        cat_caption += f"**{EMOJI} اصدار بايثون :** `{python_version()}\n`"
-        cat_caption += f"**{EMOJI} مدة التشغيل :** `{uptime}\n`"
-        cat_caption += f"**{EMOJI} المطور:** {mention}\n"
-        cat_caption += f"\n ↲ [مطور السورس](t.me/llllflf)\n"
+        cat_caption += f"**{EMOJI} Database :** `{check_sgnirts}`\n"
+        cat_caption += f"**{EMOJI} Telethon version :** `{version.__version__}\n`"
+        cat_caption += f"**{EMOJI} Catuserbot Version :** `{catversion}`\n"
+        cat_caption += f"**{EMOJI} Python Version :** `{python_version()}\n`"
+        cat_caption += f"**{EMOJI} Uptime :** `{uptime}\n`"
+        cat_caption += f"**{EMOJI} Master:** {mention}\n"
         await alive.client.send_file(
             alive.chat_id, CAT_IMG, caption=cat_caption, reply_to=reply_to_id
         )
@@ -37,12 +36,12 @@ async def amireallyalive(alive):
         await edit_or_reply(
             alive,
             f"**{CUSTOM_ALIVE_TEXT}**\n\n"
-            f"**{EMOJI} قاعدة البيانات :** `{check_sgnirts}`\n"
-            f"**{EMOJI} اصدار التليثون :** `{version.__version__}\n`"
-            f"**{EMOJI} اصدار بيكاتشو :** `{catversion}`\n"
-            f"**{EMOJI} اصدار بايثون :** `{python_version()}\n`"
-            f"**{EMOJI} مدة التشغيل :** `{uptime}\n`"
-            f"**{EMOJI} المطور:** {mention}\n",
+            f"**{EMOJI} Database :** `{check_sgnirts}`\n"
+            f"**{EMOJI} Telethon Version :** `{version.__version__}\n`"
+            f"**{EMOJI} Catuserbot Version :** `{catversion}`\n"
+            f"**{EMOJI} Python Version :** `{python_version()}\n`"
+            f"**{EMOJI} Uptime :** `{uptime}\n`"
+            f"**{EMOJI} Master:** {mention}\n",
         )
 
 
@@ -77,7 +76,7 @@ async def amireallyalive(alive):
 def check_data_base_heal_th():
     # https://stackoverflow.com/a/41961968
     is_database_working = False
-    output = "لم يتم تعيين قاعدة بيانات"
+    output = "No Database is set"
     if not Config.DB_URI:
         return is_database_working, output
     from userbot.plugins.sql_helper import SESSION
@@ -89,14 +88,14 @@ def check_data_base_heal_th():
         output = f"❌ {str(e)}"
         is_database_working = False
     else:
-        output = "تعمل بشكل طبيعي"
+        output = "Functioning Normally"
         is_database_working = True
     return is_database_working, output
 
 
 CMD_HELP.update(
     {
-        "alive": "**Plugin :** `ايدي`\
+        "alive": "**Plugin :** `alive`\
       \n\n  •  **Syntax : **`.alive` \
       \n  •  **Function : **__status of bot will be showed__\
       \n\n  •  **Syntax : **`.ialive` \
