@@ -196,7 +196,7 @@ class Config((object)):
     TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
     #  for updater plugin
     UPSTREAM_REPO_URL = os.environ.get(
-        "UPSTREAM_REPO_URL", "https://github.com/TH7RM/pika.git"
+        "UPSTREAM_REPO_URL", "https://github.com/TH7RM/Pikachu.git"
     )
     UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "master")
     # can get from https://coffeehouse.intellivoid.net/
