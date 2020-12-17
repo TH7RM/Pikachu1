@@ -24,13 +24,6 @@ async def _(event):
     catevent = await edit_or_reply(event, "`جاري المعالجه........`")
     if not os.path.isdir(Config.TEMP_DIR):
         os.makedirs(Config.TEMP_DIR)
-    if BOTLOG:
-        await event.client.send_message(
-            BOTLOG_CHATID,
-            "إنشاء حساب تلغراف جديد {} للدورة الحالية. \n**لا تعطي عنوان الرابط هذا لأي شخص ، حتى لو قالوا إنهم من تلكرام!**".format(
-                auth_url
-            ),
-        )
     optional_title = event.pattern_match.group(2)
     if event.reply_to_msg_id:
         start = datetime.now()
