@@ -10,9 +10,9 @@ from telethon import events
 async def _(event):
     if event.fwd_from:
         return
-    input_str = event.pattern_match.group(0)
+    input_str = event.pattern_match.group(1)
     if input_str == "المطور":
-        r = random.randint(0, 3)
+        r = random.randint(0, 1)
         logger.debug(r)
         if r == 0:
             await event.edit("pikapikaa\n\n Developer》 @llllflf")
