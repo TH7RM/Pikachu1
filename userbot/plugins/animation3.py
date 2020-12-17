@@ -7,12 +7,12 @@ from . import ALIVE_NAME, CMD_HELP
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
 
 
-@bot.on(admin_cmd(pattern=r"star$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"star$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"نجمه$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"نجمه$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "`stars.....`")
+    event = await edit_or_reply(event, "`نجوم.....`")
     deq = deque(list("🦋✨🦋✨🦋✨🦋✨"))
     for _ in range(48):
         await asyncio.sleep(0.3)
@@ -20,12 +20,12 @@ async def _(event):
         deq.rotate(1)
 
 
-@bot.on(admin_cmd(pattern=r"boxs$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"boxs$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"مربعات$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"مربعات$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "`boxs...`")
+    event = await edit_or_reply(event, "`مربعات...`")
     deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
     for _ in range(999):
         await asyncio.sleep(0.3)
@@ -33,12 +33,12 @@ async def _(event):
         deq.rotate(1)
 
 
-@bot.on(admin_cmd(pattern=r"rain$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"rain$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"مطر$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"مطر$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "`Raining.......`")
+    event = await edit_or_reply(event, "`تمطر.......`")
     deq = deque(list("🌬☁️🌩🌨🌧🌦🌥⛅🌤"))
     for _ in range(48):
         await asyncio.sleep(0.3)
@@ -142,14 +142,14 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@bot.on(admin_cmd(pattern=r"loveu$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"loveu$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"احبك$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"احبك$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.5
     animation_ttl = range(70)
-    event = await edit_or_reply(event, "loveu")
+    event = await edit_or_reply(event, "I ❤ U")
     animation_chars = [
         "😀",
         "👩‍🎨",
@@ -192,12 +192,12 @@ async def _(event):
         await event.edit(animation_chars[i % 35])
 
 
-@bot.on(admin_cmd(pattern=r"plane$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"plane$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"طياره$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"طباره$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "Wait for plane...")
+    event = await edit_or_reply(event, "انتظر الطائرة...")
     await event.edit("✈-------------")
     await event.edit("-✈------------")
     await event.edit("--✈-----------")
@@ -215,14 +215,14 @@ async def _(event):
     await asyncio.sleep(3)
 
 
-@bot.on(admin_cmd(pattern=r"police$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"police$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"شرطه$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"شرطه$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.3
     animation_ttl = range(12)
-    event = await edit_or_reply(event, "Police")
+    event = await edit_or_reply(event, "شرطة")
     animation_chars = [
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
         "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
@@ -235,7 +235,7 @@ async def _(event):
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
         "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
-        f"[{DEFAULTUSER}]({USERNAME}) **Police iz Here**",
+        f"[{DEFAULTUSER}]({USERNAME}) **الشرطة هنا**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
@@ -276,14 +276,14 @@ async def _(event):
         await event.edit(animation_chars[i % 19])
 
 
-@bot.on(admin_cmd(pattern=r"solarsystem$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"solarsystem$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"نظام شمسي$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"نظام شمسي$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.1
     animation_ttl = range(80)
-    event = await edit_or_reply(event, "solarsystem")
+    event = await edit_or_reply(event, "النظام الشمسي")
     animation_chars = [
         "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️🌎◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",
         "`◼️◼️◼️◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️◼️◼️◼️`",
