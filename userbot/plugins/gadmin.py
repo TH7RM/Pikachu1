@@ -109,8 +109,8 @@ async def catgban(cat):
     if BOTLOG and count != 0:
         await cat.client.send_message(
             BOTLOG_CHATID,
-            f"#GBAN\nGlobal BAN\nUser: [{user.first_name}](tg://user?id={user.id})\nID: `{user.id}`\
-                                                \nReason: `{reason}`\nBanned in `{count}` groups\nTime taken = `{cattaken} seconds`",
+            f"#الحظر_العام \nالعام \nالمتسخدم: [{user.first_name}](tg://user?id={user.id})\nايدي: `{user.id}`\
+                                                \nالسبب: `{reason}`\nمحظور في `{count}` مجموعات\nالوقت المستغرق = `{cattaken}` ثواني",
         )
 
 
@@ -161,8 +161,8 @@ async def catgban(cat):
     if BOTLOG and count != 0:
         await cat.client.send_message(
             BOTLOG_CHATID,
-            f"#UNGBAN\nGlobal UNBAN\nUser: [{user.first_name}](tg://user?id={user.id})\nID: {user.id}\
-                                                \nReason: `{reason}`\nUnbanned in `{count}` groups\nTime taken = `{cattaken} seconds`",
+            f"#الغاء_الحظر\nالعام\nالمستخدم: [{user.first_name}](tg://user?id={user.id})\nايدي: {user.id}\
+                                                \nالسبب: `{reason}`\nغير محظور في `{count}` مجموعات\nالوقت المستغرق = `{cattaken} ثواني`",
         )
 
 
@@ -182,7 +182,7 @@ async def gablist(event):
                     f"👉 [{a_user.chat_id}](tg://user?id={a_user.chat_id}) Reason None\n"
                 )
     else:
-        GBANNED_LIST = "لايوجد مستخدمون محظورون (yet)"
+        GBANNED_LIST = "لايوجد مستخدمون محظورون"
     if len(GBANNED_LIST) > 4095:
         with io.BytesIO(str.encode(GBANNED_LIST)) as out_file:
             out_file.name = "Gbannedusers.text"
@@ -234,9 +234,9 @@ async def startgmute(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#GMUTE\n"
-            f"USER: [{replied_user.user.first_name}](tg://user?id={userid})\n"
-            f"CHAT: {event.chat.title}(`{event.chat_id}`)",
+            "#الكتم\n"
+            f"المستخدم: [{replied_user.user.first_name}](tg://user?id={userid})\n"
+            f"الدردشة: {event.chat.title}(`{event.chat_id}`)",
         )
 
 
@@ -275,9 +275,9 @@ async def endgmute(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "#UNGMUTE\n"
-            f"USER: [{replied_user.user.first_name}](tg://user?id={userid})\n"
-            f"CHAT: {event.chat.title}(`{event.chat_id}`)",
+            "#الغاء_الكتم\n"
+            f"المستخدم: [{replied_user.user.first_name}](tg://user?id={userid})\n"
+            f"الدردشة: {event.chat.title}(`{event.chat_id}`)",
         )
 
 
