@@ -212,17 +212,17 @@ async def _(event):
     await event.edit("-----------✈--")
     await event.edit("------------✈-")
     await event.edit("-------------✈")
-    await asyncio.sleep(8)
+    await asyncio.sleep(3)
 
 
-@bot.on(admin_cmd(pattern=r"شرطه$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"شرطه$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"police$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"police$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.3
     animation_ttl = range(12)
-    event = await edit_or_reply(event, "شرطة")
+    event = await edit_or_reply(event, "Police")
     animation_chars = [
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
         "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
@@ -235,7 +235,7 @@ async def _(event):
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
         "🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴\n🔵🔵🔵⬜⬜⬜🔴🔴🔴",
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
-        f"[{DEFAULTUSER}]({USERNAME}) **الشرطةهنا**",
+        f"[{DEFAULTUSER}]({USERNAME}) **Police iz Here**",
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
