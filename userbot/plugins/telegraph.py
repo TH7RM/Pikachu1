@@ -14,20 +14,20 @@ r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
 
-@bot.on(admin_cmd(pattern="telegraph (media|text) ?(.*)"))
-@bot.on(sudo_cmd(pattern="telegraph (media|text) ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="تلكراف (ميديا|نص) ?(.*)"))
+@bot.on(sudo_cmd(pattern="تلكراف (ميديا|نص) ?(.*)", allow_sudo=True))
 @bot.on(admin_cmd(pattern="tg(m|t) ?(.*)"))
 @bot.on(sudo_cmd(pattern="tg(m|t) ?(.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    catevent = await edit_or_reply(event, "`processing........`")
+    catevent = await edit_or_reply(event, "`جاري المعالجه........`")
     if not os.path.isdir(Config.TEMP_DIR):
         os.makedirs(Config.TEMP_DIR)
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            "Created New Telegraph account {} for the current session. \n**Do not give this url to anyone, even if they say they are from Telegram!**".format(
+            "إنشاء حساب تلغراف جديد {} للدورة الحالية. \n**لا تعطي عنوان الرابط هذا لأي شخص ، حتى لو قالوا إنهم من تلكرام!**".format(
                 auth_url
             ),
         )
@@ -36,14 +36,14 @@ async def _(event):
         start = datetime.now()
         r_message = await event.get_reply_message()
         input_str = event.pattern_match.group(1)
-        if input_str in ["media", "m"]:
+        if input_str in ["ميديا", "m"]:
             downloaded_file_name = await event.client.download_media(
                 r_message, Config.TEMP_DIR
             )
             end = datetime.now()
             ms = (end - start).seconds
             await catevent.edit(
-                f"`Downloaded to {downloaded_file_name} in {ms} seconds.`"
+                f"`تم التنزيل إلى {downloaded_file_name} في {ms} ثانيه.`"
             )
             if downloaded_file_name.endswith((".webp")):
                 resize_image(downloaded_file_name)
@@ -51,20 +51,20 @@ async def _(event):
                 start = datetime.now()
                 media_urls = upload_file(downloaded_file_name)
             except exceptions.TelegraphException as exc:
-                await catevent.edit("**Error : **" + str(exc))
+                await catevent.edit("**خطأ : **" + str(exc))
                 os.remove(downloaded_file_name)
             else:
                 end = datetime.now()
                 ms_two = (end - start).seconds
                 os.remove(downloaded_file_name)
                 await catevent.edit(
-                    "**link : **[telegraph](https://telegra.ph{})\
-                    \n**Time Taken : **`{} seconds.`".format(
+                    "**الرابط : **[اضغط هنا](https://telegra.ph{})\
+                    \n**الوقت المستغرق : **`{} ثانيه.`".format(
                         media_urls[0], (ms + ms_two)
                     ),
                     link_preview=True,
                 )
-        elif input_str in ["text", "t"]:
+        elif input_str in ["نص", "t"]:
             user_object = await event.client.get_entity(r_message.sender_id)
             title_of_page = user_object.first_name  # + " " + user_object.last_name
             # apparently, all Users do not have last_name field
@@ -89,13 +89,13 @@ async def _(event):
             ms = (end - start).seconds
             cat = f"https://telegra.ph/{response['path']}"
             await catevent.edit(
-                f"**link : ** [telegraph]({cat})\
-                 \n**Time Taken : **`{ms} seconds.`",
+                f"**الرابط : ** [اضغط هنا]({cat})\
+                 \n**الوقت المستغرق : **`{ms} ثانيه.`",
                 link_preview=True,
             )
     else:
         await catevent.edit(
-            "`Reply to a message to get a permanent telegra.ph link. (Inspired by @ControllerBot)`",
+            "**قم بالرد على الصوره او الكتابه للحصول على رابط تلكراف دائم**",
         )
 
 
