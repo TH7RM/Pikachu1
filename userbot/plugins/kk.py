@@ -12,7 +12,7 @@ async def _(event):
         return
     input_str = event.pattern_match.group(1)
     if input_str == "الاوامر":
-        r = random.randint(0, 0)
+        r = random.randint(0, 3)
         logger.debug(r)
         if r == 0:
             await event.edit("قلب\nقلبي\nقلوب\nقمر\nاقمار\nقمور\nنجمه")
