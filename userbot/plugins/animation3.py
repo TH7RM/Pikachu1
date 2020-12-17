@@ -7,12 +7,12 @@ from . import ALIVE_NAME, CMD_HELP
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "cat"
 
 
-@bot.on(admin_cmd(pattern=r"نجمه$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"نجمه$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"star$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"star$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "`النجوم.....`")
+    event = await edit_or_reply(event, "`stars.....`")
     deq = deque(list("🦋✨🦋✨🦋✨🦋✨"))
     for _ in range(48):
         await asyncio.sleep(0.3)
@@ -20,12 +20,12 @@ async def _(event):
         deq.rotate(1)
 
 
-@bot.on(admin_cmd(pattern=r"مربعات$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"مربعات$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"boxs$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"boxs$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "`مربعات...`")
+    event = await edit_or_reply(event, "`boxs...`")
     deq = deque(list("🟥🟧🟨🟩🟦🟪🟫⬛⬜"))
     for _ in range(999):
         await asyncio.sleep(0.3)
@@ -33,12 +33,12 @@ async def _(event):
         deq.rotate(1)
 
 
-@bot.on(admin_cmd(pattern=r"مطر$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"مطر$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"rain$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"rain$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "`تمطر.......`")
+    event = await edit_or_reply(event, "`Raining.......`")
     deq = deque(list("🌬☁️🌩🌨🌧🌦🌥⛅🌤"))
     for _ in range(48):
         await asyncio.sleep(0.3)
@@ -76,8 +76,9 @@ async def _(event):
 @bot.on(admin_cmd(pattern=r"dump$", outgoing=True))
 @bot.on(sudo_cmd(pattern=r"dump$", allow_sudo=True))
 async def _(message):
-    if event.fwd_from:
+    if message.fwd_from:
         return
+    event = await edit_or_reply(message, "droping....")
     try:
         obj = message.pattern_match.group(1)
         if len(obj) != 3:
@@ -85,7 +86,6 @@ async def _(message):
         inp = " ".join(obj)
     except IndexError:
         inp = "🥞 🎂 🍫"
-    event = await edit_or_reply(message, "`droping....`")
     u, t, g, o, s, n = inp.split(), "🗑", "<(^_^ <)", "(> ^_^)>", "⠀ ", "\n"
     h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
     for something in reversed(
@@ -142,14 +142,14 @@ async def _(event):
         await event.edit(animation_chars[i % 10])
 
 
-@bot.on(admin_cmd(pattern=r"احبك$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"احبك$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"loveu$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"loveu$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.5
     animation_ttl = range(70)
-    event = await edit_or_reply(event, "I❤U")
+    event = await edit_or_reply(event, "loveu")
     animation_chars = [
         "😀",
         "👩‍🎨",
@@ -192,12 +192,12 @@ async def _(event):
         await event.edit(animation_chars[i % 35])
 
 
-@bot.on(admin_cmd(pattern=r"طياره$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"طياره$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"plane$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"plane$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
-    event = await edit_or_reply(event, "انتظر الطائرة...")
+    event = await edit_or_reply(event, "Wait for plane...")
     await event.edit("✈-------------")
     await event.edit("-✈------------")
     await event.edit("--✈-----------")
@@ -276,14 +276,14 @@ async def _(event):
         await event.edit(animation_chars[i % 19])
 
 
-@bot.on(admin_cmd(pattern=r"نظام شمسي$", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"نظام شمسي$", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"solarsystem$", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"solarsystem$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.1
     animation_ttl = range(80)
-    event = await edit_or_reply(event, "النظام الشمسي")
+    event = await edit_or_reply(event, "solarsystem")
     animation_chars = [
         "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️🌎◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",
         "`◼️◼️◼️◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️🌎◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️◼️◼️◼️`",
