@@ -14,8 +14,8 @@ r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
 auth_url = r["auth_url"]
 
 
-@bot.on(admin_cmd(pattern="تلكراف (ميديا|نص) ?(.*)"))
-@bot.on(sudo_cmd(pattern="تلكراف (ميديا|نص) ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="telegraph (media|text) ?(.*)"))
+@bot.on(sudo_cmd(pattern="telegraph (media|text) ?(.*)", allow_sudo=True))
 @bot.on(admin_cmd(pattern="tg(m|t) ?(.*)"))
 @bot.on(sudo_cmd(pattern="tg(m|t) ?(.*)", allow_sudo=True))
 async def _(event):
@@ -36,7 +36,7 @@ async def _(event):
         start = datetime.now()
         r_message = await event.get_reply_message()
         input_str = event.pattern_match.group(1)
-        if input_str in ["ميديا", "m"]:
+        if input_str in ["media", "m"]:
             downloaded_file_name = await event.client.download_media(
                 r_message, Config.TEMP_DIR
             )
@@ -64,7 +64,7 @@ async def _(event):
                     ),
                     link_preview=True,
                 )
-        elif input_str in ["نص", "t"]:
+        elif input_str in ["text", "t"]:
             user_object = await event.client.get_entity(r_message.sender_id)
             title_of_page = user_object.first_name  # + " " + user_object.last_name
             # apparently, all Users do not have last_name field
