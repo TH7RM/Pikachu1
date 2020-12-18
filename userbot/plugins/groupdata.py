@@ -383,7 +383,9 @@ async def _(event):
 async def rm_deletedacc(show):
     con = show.pattern_match.group(1).lower()
     del_u = 0
-    del_status = "**لم يتم العثور على زومبي أو حسابات محذوفة في هذه المجموعة ، المجموعة نظيفة**"
+    del_status = (
+        "**لم يتم العثور على زومبي أو حسابات محذوفة في هذه المجموعة ، المجموعة نظيفة**"
+    )
     if con != "clean":
         event = await edit_or_reply(
             show, "**البحث عن حسابات شبح / محذوفة / زومبي ...**"
@@ -466,9 +468,7 @@ async def get_chatinfo(event, catevent):
             await catevent.edit("**قناة / مجموعة غير صالحة**")
             return None
         except ChannelPrivateError:
-            await catevent.edit(
-                "**هذه قناة / مجموعة خاصة أو محظور من هناك**"
-            )
+            await catevent.edit("**هذه قناة / مجموعة خاصة أو محظور من هناك**")
             return None
         except ChannelPublicGroupNaError:
             await catevent.edit("**القناة أو المجموعة الخارقة غير موجودة**")
