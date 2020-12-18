@@ -37,9 +37,9 @@ from . import BOTLOG, BOTLOG_CHATID, CMD_HELP
 
 
 @bot.on(admin_cmd(outgoing=True, pattern="مغادره$"))
-async def kickall(kick):
-    await kick.edit("تم مغادرة المجموعة بأمر من المطور جاو عزيزي")
-    await kick.client.kick_participant(kick.chat_id, "all")
+async def kickme(leave):
+    await leave.edit("تم مغادرة المجموعة بأمر من المطور جاو عزيزي")
+    await leave.client.kick_participant(leave.chat_id, "me")
 
 
 @bot.on(admin_cmd(pattern="الادمنيه ?(.*)"))
@@ -55,7 +55,7 @@ async def _(event):
     to_write_chat = await event.get_input_chat()
     chat = None
     if input_str:
-        mentions_heading = "Admins in {} Group: \n".format(input_str)
+        mentions_heading = "الادمنيه في {} المجموعة: \n".format(input_str)
         mentions = mentions_heading
         try:
             chat = await event.client.get_entity(input_str)
@@ -130,12 +130,12 @@ async def _(event):
     await edit_or_reply(event, mentions)
 
 
-@bot.on(admin_cmd(pattern=r"users ?(.*)", outgoing=True))
-@bot.on(sudo_cmd(pattern=r"users ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern=r"الاعضاء ?(.*)", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"الاعضاء ?(.*)", allow_sudo=True))
 async def get_users(show):
     if show.fwd_from:
         return
-    mentions = "**Users in this Group**: \n"
+    mentions = "**المستخدمون في هذه المجموعة**: \n"
     reply_to_id = None
     if show.reply_to_msg_id:
         reply_to_id = show.reply_to_msg_id
@@ -143,7 +143,7 @@ async def get_users(show):
     await show.get_input_chat()
     if not input_str:
         if not show.is_group:
-            await edit_or_reply(show, "`Are you sure this is a group?`")
+            await edit_or_reply(show, "`هل أنت متأكد من أن هذه مجموعة؟`")
             return
     else:
         mentions_heading = "Users in {} Group: \n".format(input_str)
@@ -152,7 +152,7 @@ async def get_users(show):
             chat = await show.client.get_entity(input_str)
         except Exception as e:
             await edit_delete(show, f"`{str(e)}`", 10)
-    catevent = await edit_or_reply(show, "`getting users list wait...`  ")
+    catevent = await edit_or_reply(show, "`الحصول على قائمة المستخدمين انتظر...`  ")
     try:
         if not show.pattern_match.group(1):
             async for user in show.client.iter_participants(show.chat_id):
@@ -169,7 +169,7 @@ async def get_users(show):
                         f"\n[{user.first_name}](tg://user?id={user.id}) `{user.id}`"
                     )
                 else:
-                    mentions += f"\nDeleted Account `{user.id}`"
+                    mentions += f"\nالحسابات المحذوفه `{user.id}`"
     except Exception as e:
         mentions += " " + str(e) + "\n"
     if len(mentions) > Config.MAX_MESSAGE_SIZE_LIMIT:
@@ -232,7 +232,7 @@ async def _(event):
                 await et.edit(str(ex))
             else:
                 p += 1
-        await et.edit("{}: {} unbanned".format(event.chat_id, p))
+        await et.edit("{}: {} غير محظور".format(event.chat_id, p))
 
 
 @bot.on(admin_cmd(pattern="الاحصائيات ?(.*)", outgoing=True))
@@ -378,33 +378,33 @@ async def _(event):
 
 
 # Ported by ©[NIKITA](t.me/kirito6969) and ©[EYEPATCH](t.me/NeoMatrix90)
-@bot.on(admin_cmd(pattern=f"zombies ?(.*)"))
-@bot.on(sudo_cmd(pattern="zombies ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern=f"المحذوفين ?(.*)"))
+@bot.on(sudo_cmd(pattern="المحذوفين ?(.*)", allow_sudo=True))
 async def rm_deletedacc(show):
     con = show.pattern_match.group(1).lower()
     del_u = 0
-    del_status = "`No zombies or deleted accounts found in this group, Group is clean`"
+    del_status = "**لم يتم العثور على زومبي أو حسابات محذوفة في هذه المجموعة ، المجموعة نظيفة**"
     if con != "clean":
         event = await edit_or_reply(
-            show, "`Searching for ghost/deleted/zombie accounts...`"
+            show, "**البحث عن حسابات شبح / محذوفة / زومبي ...**"
         )
         async for user in show.client.iter_participants(show.chat_id):
             if user.deleted:
                 del_u += 1
                 await sleep(0.5)
         if del_u > 0:
-            del_status = f"__Found__ **{del_u}** __ghost/deleted/zombie account(s) in this group,\
-                           \nclean them by using__ `.zombies clean`"
+            del_status = f"**تم العثور  {del_u} حساب (حسابات) شبح / محذوف / زومبي في هذه المجموعة ،\
+                           \nقم بتنظيفها باستخدام**  `.zombies clean`"
         await event.edit(del_status)
         return
     chat = await show.get_chat()
     admin = chat.admin_rights
     creator = chat.creator
     if not admin and not creator:
-        await edit_delete(show, "`I am not an admin here!`", 5)
+        await edit_delete(show, "أنا لست مشرفًا هنا!**", 5)
         return
     event = await edit_or_reply(
-        show, "`Deleting deleted accounts...\nOh I can do that?!?!`"
+        show, "**حذف الحسابات المحذوفة...\nأوه أستطيع أن أفعل ذلك؟!؟!**"
     )
     del_u = 0
     del_a = 0
@@ -415,22 +415,22 @@ async def rm_deletedacc(show):
                 await sleep(0.5)
                 del_u += 1
             except ChatAdminRequiredError:
-                await edit_delete(event, "`I don't have ban rights in this group`", 5)
+                await edit_delete(event, "**ليس لدي حقوق حظر في هذه المجموعة**", 5)
                 return
             except UserAdminInvalidError:
                 del_a += 1
     if del_u > 0:
-        del_status = f"Cleaned **{del_u}** deleted account(s)"
+        del_status = f"تم تنظيف **{del_u}** حساب (حسابات) محذوفة"
     if del_a > 0:
-        del_status = f"Cleaned **{del_u}** deleted account(s) \
-        \n**{del_a}** deleted admin accounts are not removed"
+        del_status = f"تم تنظيف **{del_u}** حساب (حسابات) محذوفة \
+        \n**{del_a}** لا تتم إزالة حسابات المشرف المحذوفة"
     await edit_delete(event, del_status, 5)
     if BOTLOG:
         await show.client.send_message(
             BOTLOG_CHATID,
-            f"#CLEANUP\
+            f"#نظف\
             \n{del_status}\
-            \nCHAT: {show.chat.title}(`{show.chat_id}`)",
+            \nالمجموعة: {show.chat.title}(`{show.chat_id}`)",
         )
 
 
@@ -463,15 +463,15 @@ async def get_chatinfo(event, catevent):
         try:
             chat_info = await event.client(GetFullChannelRequest(chat))
         except ChannelInvalidError:
-            await catevent.edit("`Invalid channel/group`")
+            await catevent.edit("**قناة / مجموعة غير صالحة**")
             return None
         except ChannelPrivateError:
             await catevent.edit(
-                "`This is a private channel/group or I am banned from there`"
+                "**هذه قناة / مجموعة خاصة أو محظور من هناك**"
             )
             return None
         except ChannelPublicGroupNaError:
-            await catevent.edit("`Channel or supergroup doesn't exist`")
+            await catevent.edit("**القناة أو المجموعة الخارقة غير موجودة**")
             return None
         except (TypeError, ValueError) as err:
             await catevent.edit(str(err))
@@ -485,7 +485,7 @@ async def fetch_info(chat, event):
     broadcast = (
         chat_obj_info.broadcast if hasattr(chat_obj_info, "broadcast") else False
     )
-    chat_type = "Channel" if broadcast else "المجموعة"
+    chat_type = "قناة" if broadcast else "المجموعة"
     chat_title = chat_obj_info.title
     warn_emoji = emojize(":warning:")
     try:
@@ -516,7 +516,7 @@ async def fetch_info(chat, event):
     creator_firstname = (
         msg_info.users[0].first_name
         if creator_valid and msg_info.users[0].first_name is not None
-        else "Deleted Account"
+        else "حساب محذوف"
     )
     creator_username = (
         msg_info.users[0].username
