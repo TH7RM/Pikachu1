@@ -36,10 +36,10 @@ from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 from . import BOTLOG, BOTLOG_CHATID, CMD_HELP
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="اطردني$"))
+@bot.on(admin_cmd(outgoing=True, pattern="مغادره$"))
 async def kickme(leave):
-    await leave.edit("لا ، لا ، لا ، سأذهب بعيدًا")
-    await leave.client.kick_participant(leave.chat_id, "me")
+    await leave.edit("تم مغادرة المجموعة بأمر من المطور جاو عزيزي")
+    await leave.client.kick_participant(leave.chat_id, "all")
 
 
 @bot.on(admin_cmd(pattern="الادمنيه ?(.*)"))
