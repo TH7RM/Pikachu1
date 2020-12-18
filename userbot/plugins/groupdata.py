@@ -37,9 +37,9 @@ from . import BOTLOG, BOTLOG_CHATID, CMD_HELP
 
 
 @bot.on(admin_cmd(outgoing=True, pattern="مغادره$"))
-async def kickme(leave):
-    await leave.edit("تم مغادرة المجموعة بأمر من المطور جاو عزيزي")
-    await leave.client.kick_participant(leave.chat_id, "all")
+async def kickall(kick):
+    await kick.edit("تم مغادرة المجموعة بأمر من المطور جاو عزيزي")
+    await kick.client.kick_participant(kick.chat_id, "all")
 
 
 @bot.on(admin_cmd(pattern="الادمنيه ?(.*)"))
