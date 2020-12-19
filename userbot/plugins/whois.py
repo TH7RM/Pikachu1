@@ -42,7 +42,7 @@ async def _(event):
     try:
         dc_id, location = get_input_location(replied_user.profile_photo)
     except:
-        dc_id = "Couldn't fetch DC ID!"
+        dc_id = "تعذر جلب معلومات الايدي!"
     if spamwatch:
         ban = spamwatch.get_ban(user_id)
         if ban:
@@ -125,14 +125,14 @@ async def get_full_user(event):
 @bot.on(admin_cmd(pattern="كشف(?: |$)(.*)"))
 @bot.on(sudo_cmd(pattern="كشف(?: |$)(.*)", allow_sudo=True))
 async def who(event):
-    cat = await edit_or_reply(event, "`Fetching userinfo wait....`")
+    cat = await edit_or_reply(event, "`إحضار معلومات المستخدم انتظر....`")
     if not os.path.isdir(TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TMP_DOWNLOAD_DIRECTORY)
     replied_user = await get_user(event)
     try:
         photo, caption = await fetch_info(replied_user, event)
     except AttributeError:
-        await edit_or_reply(cat, "`Could not fetch info of that user.`")
+        await edit_or_reply(cat, "**تعذر جلب معلومات هذا المستخدم.**")
         return
     message_id_to_reply = event.message.reply_to_msg_id
     if not message_id_to_reply:
@@ -155,7 +155,7 @@ async def who(event):
 
 
 async def get_user(event):
-    """ Get the user from argument or replied message. """
+    """ اعثر على المستخدم عن طريق الرد على الرساله او المعرف """
     if event.reply_to_msg_id and not event.pattern_match.group(1):
         previous_message = await event.get_reply_message()
         replied_user = await event.client(
@@ -190,7 +190,7 @@ async def fetch_info(replied_user, event):
             user_id=replied_user.user.id, offset=42, max_id=0, limit=80
         )
     )
-    replied_user_profile_photos_count = "User haven't set profile pic"
+    replied_user_profile_photos_count = "لم يقم المستخدم بتعيين صورة الملف الشخصي"
     try:
         replied_user_profile_photos_count = replied_user_profile_photos.count
     except AttributeError:
@@ -201,7 +201,7 @@ async def fetch_info(replied_user, event):
     try:
         dc_id, location = get_input_location(replied_user.profile_photo)
     except:
-        dc_id = "Couldn't fetch DC ID!"
+        dc_id = "تعذر جلب معلومات الايدي!"
     common_chat = replied_user.common_chats_count
     username = replied_user.user.username
     user_bio = replied_user.about
@@ -252,7 +252,7 @@ async def permalink(mention):
 
 
 async def get_user_from_event(event):
-    """ Get the user from argument or replied message. """
+    """ اعثر على المستخدم عن طريق الرد على الرساله او المعرف  """
     args = event.pattern_match.group(1).split(":", 1)
     extra = None
     if event.reply_to_msg_id and len(args) != 2:
@@ -266,7 +266,7 @@ async def get_user_from_event(event):
         if user.isnumeric():
             user = int(user)
         if not user:
-            await event.edit("`Pass the user's username, id or reply!`")
+            await event.edit("**مرر اسم المستخدم أو المعرف أو الرد!**")
             return
         if event.message.entities:
             probable_user_mention_entity = event.message.entities[0]
