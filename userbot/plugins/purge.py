@@ -1,4 +1,4 @@
-# Userbot module for purging unneeded messages(usually spam or ot).
+# حقوق الطبع والنشر محفوضة لشركة بيكاتشو بوت ®™
 
 from asyncio import sleep
 
@@ -43,46 +43,17 @@ async def fastpurger(purg):
     if BOTLOG:
         await purg.client.send_message(
             BOTLOG_CHATID,
-            "#PURGE \nPurge of " + str(count) + " messages done successfully.",
+            "#التنظيف_السريع \nتم تنظيف " + str(count) + " ** رسائل بنجاح.**",
         )
     await sleep(2)
     await done.delete()
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="purgeme"))
-@bot.on(sudo_cmd(allow_sudo=True, pattern="purgeme"))
-@errors_handler
-async def purgeme(delme):
-    # For .purgeme, delete x count of your latest message.
-    message = delme.text
-    count = int(message[9:])
-    i = 1
-
-    async for message in delme.client.iter_messages(delme.chat_id, from_user="me"):
-        if i > count + 1:
-            break
-        i += 1
-        await message.delete()
-
-    smsg = await delme.client.send_message(
-        delme.chat_id,
-        "`Purge complete!` Purged " + str(count) + " messages.",
-    )
-    if BOTLOG:
-        await delme.client.send_message(
-            BOTLOG_CHATID,
-            "#PURGEME \nPurge of " + str(count) + " messages done successfully.",
-        )
-    await sleep(2)
-    i = 1
-    await smsg.delete()
-
-
-@bot.on(admin_cmd(outgoing=True, pattern="del$"))
-@bot.on(sudo_cmd(allow_sudo=True, pattern="del$"))
+@bot.on(admin_cmd(outgoing=True, pattern="مسح$"))
+@bot.on(sudo_cmd(allow_sudo=True, pattern="مسح$"))
 @errors_handler
 async def delete_it(delme):
-    """ For .del command, delete the replied message. """
+    """ بالنسبة لأمر .مسح ، احذف الرسالة التي تم الرد عليها. """
     msg_src = await delme.get_reply_message()
     if delme.reply_to_msg_id:
         try:
@@ -90,7 +61,7 @@ async def delete_it(delme):
             await delme.delete()
             if BOTLOG:
                 await delme.client.send_message(
-                    BOTLOG_CHATID, "#DEL \nDeletion of message was successful"
+                    BOTLOG_CHATID, "#مسح \nتم حذف الرسالة بنجاح"
                 )
         except rpcbaseerrors.BadRequestError:
             if BOTLOG:
