@@ -67,7 +67,7 @@ async def _(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#CLONED\nSuccesfully cloned [{first_name}](tg://user?id={user_id })",
+            f"#مستنسخ\nتم استنساخه بنجاح [{first_name}](tg://user?id={user_id })",
         )
 
 
