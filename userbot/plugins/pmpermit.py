@@ -254,8 +254,7 @@ if Config.PRIVATE_GROUP_ID is not None:
                 USER_BOT_NO_WARN = (
                     f"** هلو  {mention}, لم أوافق على إرسالك لي حتى الآن رسالة شخصية ، لا ترسل بريدًا عشوائيًا إلى صندوق الوارد الخاص بي."
                     f"فقط قل السبب وانتظر حتى تتم الموافقة عليك.\
-                                    \n\nعندك {warns}/{totalwarns} تحذيرات **\
-                                    \n\n**ارسل** `/start` **حتى يتمكن سيدي من تحديد سبب وجودك هنا.**"
+                                    \n\nعندك {warns}/{totalwarns} تحذيرات **"
                 )
         else:
             if Config.CUSTOM_PMPERMIT_TEXT:
