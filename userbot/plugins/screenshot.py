@@ -14,15 +14,15 @@ from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 from . import CMD_HELP
 
 
-@bot.on(admin_cmd(pattern="ss (.*)"))
-@bot.on(sudo_cmd(pattern="ss (.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="سكرين (.*)"))
+@bot.on(sudo_cmd(pattern="سكرين (.*)", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
         return
     if Config.CHROME_BIN is None:
-        await edit_or_reply(event, "Need to install Google Chrome. Module Stopping.")
+        await edit_or_reply(event, "تحتاج إلى تثبيت جوجل كروم. وحدة توقف.")
         return
-    catevent = await edit_or_reply(event, "`Processing ...`")
+    catevent = await edit_or_reply(event, "**معالجة ...**")
     start = datetime.now()
     try:
         chrome_options = webdriver.ChromeOptions()
@@ -33,7 +33,7 @@ async def _(event):
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.binary_location = Config.CHROME_BIN
-        await event.edit("`Starting Google Chrome BIN`")
+        await event.edit("**بدأ كوكل كروم**")
         driver = webdriver.Chrome(chrome_options=chrome_options)
         input_str = event.pattern_match.group(1)
         inputstr = input_str
@@ -42,10 +42,10 @@ async def _(event):
             inputstr = "http://" + input_str
             caturl = url(inputstr)
         if not caturl:
-            await catevent.edit("`The given input is not supported url`")
+            await catevent.edit("الإدخال المحدد ليس عنوان رابط معتمدًا")
             return
         driver.get(inputstr)
-        await catevent.edit("`Calculating Page Dimensions`")
+        await catevent.edit("**حساب أبعاد الصفحة**")
         height = driver.execute_script(
             "return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);"
         )
@@ -57,14 +57,14 @@ async def _(event):
         # for good measure to make the scroll bars disappear
         im_png = driver.get_screenshot_as_png()
         # saves screenshot of entire page
-        await catevent.edit("`Stoppping Chrome Bin`")
+        await catevent.edit("**توقف كروم**")
         driver.close()
         message_id = None
         if event.reply_to_msg_id:
             message_id = event.reply_to_msg_id
         end = datetime.now()
         ms = (end - start).seconds
-        hmm = f"**url : **{input_str} \n**Time :** `{ms} seconds`"
+        hmm = f"**الرابط : **{input_str} \n **الوقت : {ms} ثانيه **"
         await catevent.delete()
         with io.BytesIO(im_png) as out_file:
             out_file.name = input_str + ".PNG"
