@@ -5,10 +5,8 @@ import asyncio
 import os
 import time
 from datetime import datetime
-from html import unescape
 from pathlib import Path
 
-from googleapiclient.discovery import build
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import DocumentAttributeAudio
 from youtube_dl import YoutubeDL
