@@ -225,8 +225,8 @@ async def youtube_search(
         return (nexttok, videos)
 
 
-@bot.on(admin_cmd(pattern="insta (.*)"))
-@bot.on(sudo_cmd(pattern="insta (.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="انستا (.*)"))
+@bot.on(sudo_cmd(pattern="انستا (.*)", allow_sudo=True))
 async def kakashi(event):
     if event.fwd_from:
         return
@@ -234,11 +234,11 @@ async def kakashi(event):
     link = event.pattern_match.group(1)
     if "www.instagram.com" not in link:
         await edit_or_reply(
-            event, "` I need a Instagram link to download it's Video...`(*_*)"
+            event, "** أحتاج إلى رابط انستكرام لتنزيل الفيديو الخاص به...**(*_*)"
         )
     else:
         start = datetime.now()
-        catevent = await edit_or_reply(event, "**Downloading.....**")
+        catevent = await edit_or_reply(event, "**جاري التنزيل.....**")
     async with event.client.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")
@@ -250,7 +250,7 @@ async def kakashi(event):
             video = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await catevent.edit("**Error:** `unblock` @allsaverbot `and retry!`")
+            await catevent.edit("**خطأ:** `الغي حظر` @allsaverbot `واعد المحاوله`")
             return
         await catevent.delete()
         cat = await event.client.send_file(
@@ -260,7 +260,7 @@ async def kakashi(event):
         end = datetime.now()
         ms = (end - start).seconds
         await cat.edit(
-            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+            f"<b><i>➥ تم تحميل الفيديو في {ms} ثانيه.</i></b>\n<b><i>➥ تم الرفع بواسطة :- {hmention}</i></b>",
             parse_mode="html",
         )
     await event.client.delete_messages(
