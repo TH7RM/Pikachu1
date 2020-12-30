@@ -28,10 +28,10 @@ from . import CMD_HELP, hmention, progress, reply_id
 @bot.on(admin_cmd(pattern="يوتيو(a|ب) (.*)", outgoing=True))
 @bot.on(sudo_cmd(pattern="يوتيو(a|ب) (.*)", allow_sudo=True))
 async def download_video(v_url):
-    """ For .ytdl command, download media from YouTube and many other sites. """
+    """ امر `.يوتيوب` ، هو امر تنزيل الوسائط من YouTube  وقم بأستخدام امر `.انستا` لتنزيل الوسائط من instagram. """
     url = v_url.pattern_match.group(2)
     ytype = v_url.pattern_match.group(1).lower()
-    v_url = await edit_or_reply(v_url, "`Preparing to download...`")
+    v_url = await edit_or_reply(v_url, "`إعداد لتحميل...`")
     reply_to_id = await reply_id(v_url)
     if ytype == "a":
         opts = {
@@ -74,18 +74,18 @@ async def download_video(v_url):
         song = False
         video = True
     try:
-        await v_url.edit("`Fetching data, please wait..`")
+        await v_url.edit("**إحضار البيانات ، يرجى الانتظار..**")
         with YoutubeDL(opts) as ytdl:
             ytdl_data = ytdl.extract_info(url)
     except DownloadError as DE:
         await v_url.edit(f"`{str(DE)}`")
         return
     except ContentTooShortError:
-        await v_url.edit("`The download content was too short.`")
+        await v_url.edit("`كان محتوى التنزيل قصيرًا جدًا.`")
         return
     except GeoRestrictedError:
         await v_url.edit(
-            "`Video is not available from your geographic location due to geographic restrictions imposed by a website.`"
+            "**الفيديو غير متاح من موقعك الجغرافي بسبب القيود الجغرافية التي يفرضها موقع الويب.**"
         )
         return
     except MaxDownloadsReached:
@@ -142,7 +142,7 @@ async def download_video(v_url):
         await v_url.edit(
             f"`Preparing to upload video:`\
         \n**{ytdl_data['title']}**\
-        \nby *{ytdl_data['uploader']}*"
+        \n اسم القناة➥   *{ytdl_data['uploader']}*"
         )
         await v_url.client.send_file(
             v_url.chat_id,
