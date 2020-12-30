@@ -36,8 +36,8 @@ KANGING_STR = [
 ]
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="kang ?(.*)"))
-@bot.on(sudo_cmd(pattern="kang ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(outgoing=True, pattern="صنع ملصق ?(.*)"))
+@bot.on(sudo_cmd(pattern="صنع ملصق ?(.*)", allow_sudo=True))
 async def kang(args):
     """ For .kang command, kangs stickers or creates new ones. """
     user = await bot.get_me()
