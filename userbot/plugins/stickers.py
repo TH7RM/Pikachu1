@@ -26,13 +26,16 @@ from .. import CMD_HELP
 from ..utils import admin_cmd, edit_or_reply, sudo_cmd
 
 KANGING_STR = [
-    "باستخدام شعوذة لممارسة هذا الملصق ...",
-    "دعوة هذا الملصق إلى حقيبتي...",
-    "تم صناعة هذا الملصق...",
-    "يا هذا ملصق جميل!",
-    "الورود هي البنفسج الأحمر باللون الأزرق ، مما يجعل هذا الملصق يبدو رائعًا",
-    "سجن هذا الملصق...",
-    "سرقة الملصق الخاص بك هو سرقة هذا الملصق... ",
+    "Using Witchery to kang this sticker...",
+    "Plagiarising hehe...",
+    "Inviting this sticker over to my pack...",
+    "Kanging this sticker...",
+    "Hey that's a nice sticker!\nMind if I kang?!..",
+    "hehe me stel ur stikér\nhehe.",
+    "Ay look over there (☉｡☉)!→\nWhile I kang this...",
+    "Roses are red violets are blue, kanging this sticker so my pacc looks cool",
+    "Imprisoning this sticker...",
+    "Mr.Steal Your Sticker is stealing this sticker... ",
 ]
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
