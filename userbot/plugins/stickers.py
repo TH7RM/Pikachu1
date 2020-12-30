@@ -41,8 +41,8 @@ KANGING_STR = [
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="kang ?(.*)"))
-@bot.on(sudo_cmd(pattern="kang ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(outgoing=True, pattern="صنع ملصق ?(.*)"))
+@bot.on(sudo_cmd(pattern="صنع ملصق ?(.*)", allow_sudo=True))
 async def kang(args):
     user = await args.client.get_me()
     if not user.username:
@@ -89,7 +89,7 @@ async def kang(args):
             await edit_delete(args, "`Unsupported File!`")
             return
     else:
-        await edit_delete(args, "`I can't kang that...`")
+        await edit_delete(args, "**قم بالرد على رساله لتحويلها...**")
         return
     if photo:
         splat = args.text.split()
