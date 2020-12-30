@@ -381,8 +381,8 @@ async def kang(args):
                 )
 
 
-@bot.on(admin_cmd(pattern="pkang ?(.*)", outgoing=True))
-@bot.on(sudo_cmd(pattern="pkang ?(.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="صنع ملصق ?(.*)", outgoing=True))
+@bot.on(sudo_cmd(pattern="صنع ملصق ?(.*)", allow_sudo=True))
 async def pack_kang(event):
     if event.fwd_from:
         return
