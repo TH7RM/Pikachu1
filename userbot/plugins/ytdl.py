@@ -141,7 +141,7 @@ async def download_video(v_url):
     elif video:
         await v_url.edit(
             f"التحضير لتحميل فيديو:\
-        \n اسم الفيدية ↫ **{ytdl_data['title']}**\
+        \n اسم الفيديو ↫ **{ytdl_data['title']}**\
         \n اسم القناة↫   **{ytdl_data['uploader']}**"
         )
         await v_url.client.send_file(
