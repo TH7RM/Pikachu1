@@ -29,7 +29,7 @@ async def amireallyalive(alive):
         cat_caption += f"**{EMOJI} مدة التشغيل :** `{uptime}\n`"
         cat_caption += f"**{EMOJI} المطور:** {mention}\n"
         cat_caption += (
-            f"\n ↲ [مطور السورس](t.me/B_X_6) ⨉ [قناة السورس](t.me/PikPikbot)\n"
+            f"\n ↲ [مطور السورس](t.me/EEEEE1K) ⨉ [قناة السورس](t.me/PikPikbot)\n"
         )
         await alive.client.send_file(
             alive.chat_id, CAT_IMG, caption=cat_caption, reply_to=reply_to_id
