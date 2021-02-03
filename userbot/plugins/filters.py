@@ -1,8 +1,7 @@
 # ported from paperplaneExtended by avinashreddy3108 for media support
 import re
 
-from ..utils import admin_cmd, edit_or_reply, sudo_cmd
-from . import BOTLOG, BOTLOG_CHATID, CMD_HELP
+from . import BOTLOG, BOTLOG_CHATID
 from .sql_helper.filter_sql import (
     add_filter,
     get_filters,
@@ -33,8 +32,8 @@ async def filter_incoming_handler(handler):
         pass
 
 
-@bot.on(admin_cmd(pattern="filter (.*)"))
-@bot.on(sudo_cmd(pattern="filter (.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="اضف رد (.*)"))
+@bot.on(sudo_cmd(pattern="اضف رد (.*)", allow_sudo=True))
 async def add_new_filter(new_handler):
     if new_handler.fwd_from:
         return
@@ -47,9 +46,9 @@ async def add_new_filter(new_handler):
             await new_handler.client.send_message(
                 BOTLOG_CHATID,
                 f"#FILTER\
-            \nCHAT ID: {new_handler.chat_id}\
-            \nTRIGGER: {keyword}\
-            \n\nThe following message is saved as the filter's reply data for the chat, please do NOT delete it !!",
+            \nايدي الدردشه: {new_handler.chat_id}\
+            \nالرد: {keyword}\
+            \n\nيتم حفظ الرسالة التالية كبيانات رد على المستخدمين في الدردشه ، يرجى عدم حذفها !!",
             )
             msg_o = await new_handler.client.forward_messages(
                 entity=BOTLOG_CHATID,
@@ -61,77 +60,76 @@ async def add_new_filter(new_handler):
         else:
             await edit_or_reply(
                 new_handler,
-                "`Saving media as reply to the filter requires the BOTLOG_CHATID to be set.`",
+                "`يتطلب حفظ الوسائط كرد على المرشح تعيين BOTLOG_CHATID.`",
             )
             return
     elif new_handler.reply_to_msg_id and not string:
         rep_msg = await new_handler.get_reply_message()
         string = rep_msg.text
-    success = "`Filter` **{}** `{} successfully`"
+    success = "رد **{}** تم {} بنجاح "
     if add_filter(str(new_handler.chat_id), keyword, string, msg_id) is True:
-        return await edit_or_reply(new_handler, success.format(keyword, "added"))
+        return await edit_or_reply(new_handler, success.format(keyword, "اضافته"))
     remove_filter(str(new_handler.chat_id), keyword)
     if add_filter(str(new_handler.chat_id), keyword, string, msg_id) is True:
-        return await edit_or_reply(new_handler, success.format(keyword, "Updated"))
-    await edit_or_reply(new_handler, f"Error while setting filter for {keyword}")
+        return await edit_or_reply(new_handler, success.format(keyword, "تحديثه"))
+    await edit_or_reply(new_handler, f"خطأ أثناء تعيين عامل التصفية لـ {keyword}")
 
 
-@bot.on(admin_cmd(pattern="filters$"))
-@bot.on(sudo_cmd(pattern="filters$", allow_sudo=True))
+@bot.on(admin_cmd(pattern="الردود$"))
+@bot.on(sudo_cmd(pattern="الردود$", allow_sudo=True))
 async def on_snip_list(event):
     if event.fwd_from:
         return
-    OUT_STR = "There are no filters in this chat."
+    OUT_STR = "لا توجد ردود في هذه الدردشة."
     filters = get_filters(event.chat_id)
     for filt in filters:
-        if OUT_STR == "There are no filters in this chat.":
-            OUT_STR = "Active filters in this chat:\n"
-        OUT_STR += "👉 `{}`\n".format(filt.keyword)
+        if OUT_STR == "لا توجد ردود في هذه الدردشة.":
+            OUT_STR = "الردود⇲\n"
+        OUT_STR += "↫ `{}`\n".format(filt.keyword)
     await edit_or_reply(
         event,
         OUT_STR,
-        caption="Available Filters in the Current Chat",
+        caption="الردود المتاحة في الدردشة الحالية",
         file_name="filters.text",
     )
 
 
-@bot.on(admin_cmd(pattern="stop (.*)"))
-@bot.on(sudo_cmd(pattern="stop (.*)", allow_sudo=True))
+@bot.on(admin_cmd(pattern="حذف رد (.*)"))
+@bot.on(sudo_cmd(pattern="حذف رد (.*)", allow_sudo=True))
 async def remove_a_filter(r_handler):
     if r_handler.fwd_from:
         return
     filt = r_handler.pattern_match.group(1)
     if not remove_filter(r_handler.chat_id, filt):
-        await r_handler.edit("Filter` {} `doesn't exist.".format(filt))
+        await r_handler.edit("الرد⇠` {} `غير موجود.".format(filt))
     else:
-        await r_handler.edit("Filter `{} `was deleted successfully".format(filt))
+        await r_handler.edit("الرد⇠ `{} `تم حذفه بنجاح".format(filt))
 
 
-@bot.on(admin_cmd(pattern="rmfilters$"))
-@bot.on(sudo_cmd(pattern="rmfilters$", allow_sudo=True))
+@bot.on(admin_cmd(pattern="مسح الردود$"))
+@bot.on(sudo_cmd(pattern="مسح الردود$", allow_sudo=True))
 async def on_all_snip_delete(event):
     if event.fwd_from:
         return
     filters = get_filters(event.chat_id)
     if filters:
         remove_all_filters(event.chat_id)
-        await edit_or_reply(event, f"filters in current chat deleted successfully")
+        await edit_or_reply(event, f"تم حذف الردود في الدردشة الحالية بنجاح")
     else:
-        await edit_or_reply(event, f"There are no filters in this group")
+        await edit_or_reply(event, f"لا توجد ردود في هذه المجموعة")
 
 
 CMD_HELP.update(
     {
         "filters": "**Plugin :**`filters`\
-    \n\n**Synatx :** `.filters`\
-    \n**Usage: **Lists all active (of your userbot) filters in a chat.\
-    \n\n*Synatx :** `.filter`  reply to a message with .filter <keyword>\
-    \n**Usage: **Saves the replied message as a reply to the 'keyword'.\
-    \nThe bot will reply to the message whenever 'keyword' is mentioned.\
-    \nWorks with everything from files to stickers.\
-    \n\n*Synatx :** `.stop <keyword>`\
-    \n**Usage: **Stops the specified keyword.\
-    \n\n*Synatx :** `.rmfilters` \
-    \n**Usage: **Removes all filters of your userbot in the chat."
+    \n\n  •  **Synatx :** `.filters`\
+    \n  •  **Usage: **Lists all active (of your userbot) filters in a chat.\
+    \n\n  •  **Synatx :** `.filter`  reply to a message with .filter <keyword>\
+    \n  •  **Usage: **Saves the replied message as a reply to the 'keyword'.\
+    \nThe bot will reply to the message whenever 'keyword' is mentioned. Works with everything from files to stickers.\
+    \n\n  •  *Synatx :** `.stop <keyword>`\
+    \n  •  **Usage: **Stops the specified keyword.\
+    \n\n  •  *Synatx :** `.rmfilters` \
+    \n  •  **Usage: **Removes all filters of your userbot in the chat."
     }
 )
